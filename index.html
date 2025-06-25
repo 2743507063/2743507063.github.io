@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的个人博客 | 分享知识与思考</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #6c63ff;
+            --secondary-color: #4a44b5;
+            --accent-color: #ff6b6b;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --gray-color: #6c757d;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #f5f7ff;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            margin-left: 15px;
+            margin-top: 10px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        nav ul li a.active {
+            background-color: var(--accent-color);
+        }
+
+        /* 主要内容区 */
+        .hero {
+            background: linear-gradient(rgba(108, 99, 255, 0.9), rgba(74, 68, 181, 0.9)), url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 40px;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        /* 博客内容布局 */
+        .blog-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .blog-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 文章卡片 */
+        .post-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+            transition: var(--transition);
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .post-img {
+            height: 200px;
+            width: 100%;
+            background: linear-gradient(45deg, #6c63ff, #4a44b5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .post-content {
+            padding: 20px;
+        }
+
+        .post-meta {
+            display: flex;
+            margin-bottom: 15px;
+            color: var(--gray-color);
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .post-meta span {
+            margin-right: 15px;
+            margin-bottom: 5px;
+        }
+
+        .post-meta i {
+            margin-right: 5px;
+            color: var(--primary-color);
+        }
+
+        .post-content h2 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        .post-content p {
+            margin-bottom: 20px;
+            color: var(--gray-color);
+        }
+
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .read-more i {
+            margin-left: 5px;
+            transition: var(--transition);
+        }
+
+        .read-more:hover i {
+            transform: translateX(5px);
+        }
+
+        /* 侧边栏 */
+        .sidebar {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .sidebar h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+            color: var(--dark-color);
+        }
+
+        .about-widget {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            color: white;
+            font-size: 2.5rem;
+        }
+
+        .about-widget p {
+            margin-bottom: 15px;
+            color: var(--gray-color);
+            font-size: 0.95rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-links a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--light-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .category-list {
+            list-style: none;
+        }
+
+        .category-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .category-list li:last-child {
+            border-bottom: none;
+        }
+
+        .category-list a {
+            color: var(--gray-color);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+        }
+
+        .category-list a:hover {
+            color: var(--primary-color);
+        }
+
+        .category-list span {
+            background-color: var(--light-color);
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        /* 页脚 */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .footer-column h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+
+        .footer-column p {
+            color: #aaa;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-blog"></i>
+                <span>个人博客</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">首页</a></li>
+                    <li><a href="#">文章</a></li>
+                    <li><a href="#">分类</a></li>
+                    <li><a href="#">关于</a></li>
+                    <li><a href="#">联系</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div class="container">
+            <h1>分享知识与思考</h1>
+            <p>欢迎来到我的个人博客，这里记录了我的学习笔记、技术分享和生活感悟。每一篇文章都是我对世界的理解和思考。</p>
+            <a href="#" class="btn">浏览最新文章</a>
+        </div>
+    </section>
+
+    <!-- 博客内容 -->
+    <div class="container blog-container">
+        <main>
+            <article class="post-card">
+                <div class="post-img">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span><i class="far fa-calendar"></i> 2023年10月15日</span>
+                        <span><i class="far fa-folder"></i> 前端开发</span>
+                        <span><i class="far fa-comments"></i> 12 条评论</span>
+                    </div>
+                    <h2>深入理解CSS Flexbox布局</h2>
+                    <p>Flexbox是一种强大的CSS布局模型，它能够让我们更高效地创建响应式布局。本文将深入探讨Flexbox的核心概念、属性及其实际应用场景，帮助你彻底掌握这一现代布局技术。</p>
+                    <a href="#" class="read-more">阅读全文 <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+
+            <article class="post-card">
+                <div class="post-img">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span><i class="far fa-calendar"></i> 2023年10月8日</span>
+                        <span><i class="far fa-folder"></i> 移动开发</span>
+                        <span><i class="far fa-comments"></i> 8 条评论</span>
+                    </div>
+                    <h2>2023年移动应用设计趋势分析</h2>
+                    <p>随着技术的不断发展，移动应用设计也在不断演进。本文将分析2023年最值得关注的移动应用设计趋势，包括微交互、暗黑模式、3D元素等，帮助设计师和开发者把握未来方向。</p>
+                    <a href="#" class="read-more">阅读全文 <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+
+            <article class="post-card">
+                <div class="post-img">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span><i class="far fa-calendar"></i> 2023年10月1日</span>
+                        <span><i class="far fa-folder"></i> 个人成长</span>
+                        <span><i class="far fa-comments"></i> 15 条评论</span>
+                    </div>
+                    <h2>高效学习的7个科学方法</h2>
+                    <p>学习能力是21世纪最重要的技能之一。本文将介绍7个基于认知科学研究的高效学习方法，帮助你在更短的时间内掌握更多知识，并形成长期记忆。</p>
+                    <a href="#" class="read-more">阅读全文 <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+        </main>
+
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="about-widget">
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3>关于我</h3>
+                <p>前端开发工程师，热爱编程与设计。喜欢分享技术知识和个人成长经验，相信持续学习是进步的关键。</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="categories">
+                <h3>文章分类</h3>
+                <ul class="category-list">
+                    <li><a href="#">前端开发 <span>15</span></a></li>
+                    <li><a href="#">JavaScript <span>22</span></a></li>
+                    <li><a href="#">响应式设计 <span>9</span></a></li>
+                    <li><a href="#">个人成长 <span>18</span></a></li>
+                    <li><a href="#">生活随笔 <span>12</span></a></li>
+                    <li><a href="#">技术趋势 <span>7</span></a></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>关于博客</h4>
+                    <p>本博客专注于分享前端开发技术、设计理念和个人成长经验。旨在创建一个开放、共享的学习平台，与所有技术爱好者共同进步。</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>快速链接</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">首页</a></li>
+                        <li><a href="#">最新文章</a></li>
+                        <li><a href="#">热门分类</a></li>
+                        <li><a href="#">关于作者</a></li>
+                        <li><a href="#">联系我</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>联系方式</h4>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> contact@example.com</li>
+                        <li><i class="fab fa-github"></i> github.com/username</li>
+                        <li><i class="fab fa-twitter"></i> @twitterhandle</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 中国，北京</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 个人博客 | 设计与开发 by Your Name</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
